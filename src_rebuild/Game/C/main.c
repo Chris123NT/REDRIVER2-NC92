@@ -1263,6 +1263,10 @@ void StepSim(void)
 			StartSpooling();
 		}
 	}
+	if (gCurrentMissionNumber == 16 && CameraCnt < 3U)
+	{
+		car_data[1].hd.where.t[1] = car_data[0].hd.where.t[1];
+	}
 }
 
 // [A] checks VSync if can time step
@@ -1616,12 +1620,20 @@ void DrawGame(void)
 		DrawPauseMenus();
 
 		RenderGame2(0);
+		if (NumPlayers == 2 && current < last)
+		{
+			SetupDrawBuffers();
+		}
 		SwapDrawBuffers();
 	}
 	else
 	{
 		ObjectDrawnValue = FrameCnt;
 		RenderGame2(0);
+		if (NumPlayers == 2 && current < last)
+		{
+			SetupDrawBuffers();
+		}
 		SwapDrawBuffers2(0);
 
 		ObjectDrawnValue += 16;
