@@ -35,6 +35,10 @@ void LoadCustomCarCosmetics(CAR_COSMETICS* dest, int modelNumber)
 {
 	char filename[64];
 
+	extern int gContentOverride;
+
+	if (gContentOverride == 1)
+
 	sprintf(filename, "LEVELS\\%s\\CARMODEL_%d.COS", LevelNames[GameLevel], modelNumber);
 	if (!FileExists(filename))
 	{
@@ -72,6 +76,9 @@ void ProcessCosmeticsLump(char *lump_ptr, int lump_size)
 			car_cosmetics[i] = *(CAR_COSMETICS*)((u_char*)lump_ptr + offset);
 
 #ifndef PSX
+			extern int gContentOverride;
+
+			if (gContentOverride == 1)
 			LoadCustomCarCosmetics(&car_cosmetics[i], model);
 #endif
 			FixCarCos(&car_cosmetics[i], model);
